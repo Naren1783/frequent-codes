@@ -1,0 +1,29 @@
+import java.util.*;
+
+class TicketBooking {
+    private int totalSeats = 10;
+
+    // synchronized ensures only one thread/user books at a time
+    public synchronized void bookTicket(String name, int requestedSeats) {
+        if (totalSeats >= requestedSeats && requestedSeats > 0) {
+            System.out.println("Hi " + name + ", " + requestedSeats + " seats booked successfully!");
+            totalSeats -= requestedSeats;
+            System.out.println("Remaining seats: " + totalSeats);
+        } else {
+            System.out.println("Sorry " + name + ", requested seats not available.");
+        }
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        TicketBooking system = new TicketBooking();
+        
+        // Simulating multiple automated booking requests (Threads)
+        Thread t1 = new Thread(() -> system.bookTicket("Alice", 3));
+        Thread t2 = new Thread(() -> system.bookTicket("Bob", 8)); // Should fail if Alice books first
+        
+        t1.start();
+        t2.start();
+    }
+}
