@@ -1,0 +1,13 @@
+import phonenumbers
+from phonenumbers import geocoder
+
+def get_country(phone_number):
+    try:
+        parsed_number = phonenumbers.parse(phone_number)
+        country = geocoder.description_for_number(parsed_number, "en")
+        return country
+    except Exception as e:
+        return str(e)
+
+number = input("Enter phone number with + country code (e.g., +919000000000): ")
+print("Country:", get_country(number))
