@@ -1,0 +1,31 @@
+import pandas as pd
+import datetime
+import smtplib
+from email.message import EmailMessage
+
+MY_EMAIL = "your_email@gmail.com"
+MY_PASSWORD = "your_app_password"
+
+def send_birthday_email(recipient_email, recipient_name):
+    msg = EmailMessage()
+    msg.set_content(f"Happy Birthday {recipient_name}! Have a fantastic day!")
+    msg["Subject"] = "Happy Birthday!"
+    msg["From"] = MY_EMAIL
+    msg["To"] = recipient_email
+
+    with smtplib.SMTP_SSL("smtp.gmail.com", 465) as server:
+        server.login(MY_EMAIL, MY_PASSWORD)
+        server.send_message(msg)
+
+def check_birthdays():
+    today = datetime.datetime.now().strftime("%m-%d")
+    
+    df = pd.read_csv("birthdays.csv")
+    
+    for index, row in df.iterrows():
+        if row["birthday"] == today:
+            send_birthday_email(row["email"], row["name"])
+            print(f"Sent birthday wish to {row['name']}")
+
+if __name__ == "__main__":
+    check_birthdays()
