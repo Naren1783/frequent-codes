@@ -1,0 +1,9 @@
+import pyautogui
+import time
+print("Starting in 3 seconds...")
+time.sleep(3)
+for i in range(100):
+    pyautogui.click()
+    time.sleep(0.1)
+
+print("Finished!")
