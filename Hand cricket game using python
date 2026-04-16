@@ -1,0 +1,66 @@
+import random
+
+def play_innings(role, target=None):
+    score = 0
+    print(f"\n--- {role.upper()} INNINGS ---")
+    while True:
+        try:
+            player_num = int(input("Enter a number (1-6): "))
+            if player_num < 1 or player_num > 6:
+                print("Invalid input! Choose between 1 and 6.")
+                continue
+        except ValueError:
+            print("Please enter a valid integer.")
+            continue
+
+        comp_num = random.randint(1, 6)
+        print(f"You: {player_num} | Computer: {comp_num}")
+
+        if player_num == comp_num:
+            print("OUT!")
+            break
+        
+        runs = player_num if role == "batting" else comp_num
+        score += runs
+        print(f"Current Score: {score}")
+
+        if target and score > target:
+            break
+            
+    return score
+
+def hand_cricket():
+    print("Welcome to Hand Cricket!")
+    
+    toss_choice = input("Choose Heads (h) or Tails (t): ").lower()
+    toss_result = random.choice(['h', 't'])
+    
+    user_batting = False
+    if toss_choice == toss_result:
+        choice = input("You won the toss! Bat (b) or Bowl (bo)? ").lower()
+        user_batting = True if choice == 'b' else False
+    else:
+        comp_choice = random.choice(['bat', 'bowl'])
+        print(f"Computer won the toss and chose to {comp_choice}!")
+        user_batting = True if comp_choice == 'bowl' else False
+
+    if user_batting:
+        score1 = play_innings("batting")
+        print(f"\nYour final score: {score1}. Computer needs {score1 + 1} to win.")
+        score2 = play_innings("bowling", target=score1)
+    else:
+        score1 = play_innings("bowling")
+        print(f"\nComputer's final score: {score1}. You need {score1 + 1} to win.")
+        score2 = play_innings("batting", target=score1)
+
+    if user_batting:
+        if score1 > score2: print("\nCONGRATULATIONS! YOU WON!")
+        elif score1 < score2: print("\nGAME OVER! COMPUTER WON!")
+        else: print("\nIT'S A TIE!")
+    else:
+        if score2 > score1: print("\nCONGRATULATIONS! YOU WON!")
+        elif score2 < score1: print("\nGAME OVER! COMPUTER WON!")
+        else: print("\nIT'S A TIE!")
+
+if __name__ == "__main__":
+    hand_cricket()
