@@ -1,0 +1,17 @@
+class TollBooth:
+    def __init__(self, booth_id, toll_rates):
+        self.booth_id = booth_id
+        self.toll_rates = toll_rates
+        self.revenue = 0
+
+    def process_vehicle(self, vehicle_type):
+        if vehicle_type in self.toll_rates:
+            amount = self.toll_rates[vehicle_type]
+            self.revenue += amount
+            print(f"Vehicle: {vehicle_type} | Toll Paid: {amount}")
+            return True
+        print("Vehicle type not recognized.")
+        return False
+
+my_toll = TollBooth("Booth_01", {'car': 50, 'bus': 80, 'truck': 120})
+my_toll.process_vehicle('car')
