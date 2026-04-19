@@ -1,0 +1,34 @@
+import datetime
+
+# --- Simulation Database ---
+registered_vehicles = {
+    "TN01AB1234": {"type": "car", "balance": 500.0},
+    "KA05CD5678": {"type": "truck", "balance": 150.0},
+    "DL09EF9012": {"type": "car", "balance": 50.0}
+}
+
+toll_rates = {"car": 100.0, "truck": 300.0}
+
+def process_toll(vehicle_id):
+    print(f"\n--- Scanning Vehicle: {vehicle_id} ---")
+    
+    if vehicle_id not in registered_vehicles:
+        return "ERROR: Vehicle not registered. Please pay at manned booth."
+    
+    vehicle = registered_vehicles[vehicle_id]
+    v_type = vehicle["type"]
+    toll_amount = toll_rates.get(v_type, 0)
+    
+    if vehicle["balance"] < toll_amount:
+        return f"ERROR: Low Balance. Need ${toll_amount}, has ${vehicle['balance']}."
+    
+    vehicle["balance"] -= toll_amount
+    
+    return (f"SUCCESS: {v_type.upper()} entered. "
+            f"Toll: ${toll_amount}. New Balance: ${vehicle['balance']}")
+
+# --- Simulation Execution ---
+print(process_toll("TN01AB1234"))
+print(process_toll("KA05CD5678"))
+print(process_toll("DL09EF9012"))
+print(process_toll("XY00ZZ0000"))
