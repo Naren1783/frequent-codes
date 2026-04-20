@@ -1,0 +1,16 @@
+from datetime import datetime
+from timezonefinder import TimezoneFinder
+import pytz
+
+latitude = 19.0760
+longitude = 72.8777
+
+tf = TimezoneFinder()
+timezone_str = tf.timezone_at(lng=longitude, lat=latitude)
+
+if timezone_str:
+    tz = pytz.timezone(timezone_str)
+    local_time = datetime.now(tz)
+    print(f"Time in {timezone_str}: {local_time.strftime('%Y-%m-%d %H:%M:%S')}")
+else:
+    print("Timezone not found.")
