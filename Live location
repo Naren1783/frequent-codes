@@ -1,0 +1,17 @@
+import folium
+import geocoder
+g = geocoder.ip('me')
+location = g.latlng  # Returns [latitude, longitude]
+
+print(f"Location found: {location}")
+
+my_map = folium.Map(location=location, zoom_start=15)
+
+folium.Marker(
+    location,
+    popup="Current Location",
+    tooltip="Click for info"
+).add_to(my_map)
+map_file = "live_location.html"
+my_map.save(map_file)
+print(f"Map saved as {map_file}. Open this file in a browser.")
