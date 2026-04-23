@@ -1,0 +1,14 @@
+public class MaskPhoneNumber {
+    public static void main(String[] args) {
+        String phoneNumber = "12345678901";
+        String maskedNumber = maskFirstSeven(phoneNumber);
+        System.out.println(maskedNumber);
+    }
+
+    public static String maskFirstSeven(String number) {
+        if (number == null || number.length() <= 7) {
+            return "*******";
+        }
+        return "*******" + number.substring(7);
+    }
+}
